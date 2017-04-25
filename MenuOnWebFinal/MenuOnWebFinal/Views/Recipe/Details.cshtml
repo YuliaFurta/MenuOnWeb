@@ -1,0 +1,46 @@
+﻿@using MenuOnWebFinal.Models
+@model MenuOnWebFinal.Models.ViewRecipe
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<h2>@Html.DisplayFor(i => i.Name)</h2>
+<div class="row">
+    <img src="~/Content/images/thumbnails/@Model.ImageUrl" alt="@Model.Name" />
+    <p>@Model.Likes</p>
+    <p>@Model.Text</p>
+    Ingridients:
+    @foreach (var tag in Model.Tags)
+    {
+        <p>@tag</p>
+    }
+
+    Comments:
+    @foreach (CommentModel comment in ViewBag.Comments)
+    {
+        <p>@comment.AuthorLogin</p>
+        <p>@comment.CreateDate</p>
+        <p>@comment.Text</p>
+        <p>@Html.ActionLink("Видалити комент", "DeleteComment", new { id = comment.Id })</p>
+    }
+    <br>
+    <div>@Html.ActionLink("Видалити", "Delete", "Recipe", new { id = Model.Id }, null)</div>
+    <div>@Html.ActionLink("Редагувати", "Edit", "Recipe", new { id = Model.Id }, null)</div>
+
+
+    <form method="post" action="/Recipe/AddComment">
+        <input type="hidden" value="@Model.Id" name="RecipeId" />
+        <input type="hidden" value="@DateTime.Now" name="CreateDate" />
+        <input type="hidden" value="rr" name="AuthorLogin" />
+        <input type="text" name="Text" placeholder="Введіть коментар" />
+        <input type="submit" value="Додати" />
+    </form>
+
+    <form method="post" action="/Recipe/Like">
+        <input type="hidden" value="@Model.Id" name="RecipeId" />
+        <input type="hidden" value="1" name="UserId" />
+        <input type="submit" value="Лайкнути" />
+    </form>
+
+</div>

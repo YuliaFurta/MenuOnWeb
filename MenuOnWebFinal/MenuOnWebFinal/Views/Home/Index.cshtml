@@ -1,0 +1,30 @@
+﻿@using MenuOnWebFinal.Models;
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@{<div class="row">
+    @foreach (ViewRecipe recipe in @ViewBag.Recipes)
+    {
+        <h2>@recipe.Name</h2>
+        <img src="~/Content/images/thumbnails/@recipe.ImageUrl" alt="@recipe.Name">
+        <p>@recipe.Likes</p>
+        <p>@recipe.Text</p>
+        <div>@Html.ActionLink("Читати ще", "Details", "Recipe", new { id = recipe.Id }, null)</div>
+    }
+</div>
+    if (@ViewBag.IsAuthenticated == "true")
+    {
+         <div>@Html.ActionLink("Створити рецепт", "Create", "Recipe")</div>
+         <div>@Html.ActionLink("Edit Profile", "Edit", "User")</div>
+    }
+    if (@ViewBag.EnableAction == "links")
+    {
+                    <ul>
+                        <li>@Html.ActionLink("Create User", "CreateUser", "Admin")</li>
+                        <li>@Html.ActionLink("Assign Role", "AssignRole", "Admin")</li>
+                        <li>@Html.ActionLink("Delete User", "DeleteUser", "Admin")</li>
+                    </ul>
+                    }
+                }
+    }
